@@ -31,11 +31,21 @@ media_title: "Star Wars: The Empire Strikes Back (Episode V)"
 **Take Note of 'media_content_id: 0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3'**
 
 Now take combine the id into this link " [https://www.disneyplus.com/en-gb/browse/entity-0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3](https://www.disneyplus.com/en-gb/browse/entity-0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3) " and put it in a browser. You should see the exact movie that you are playing.
+
+
+![Screenshot 2024-04-15 at 3 18 27 PM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/6ccb6401-ef31-4330-ab72-ca26a36fad42)
+
+
+
+
 ![](Home%20Assistant%20-%20AppleTv%20-%20Disney%20+%20Plus%20Cover%20Art/Screenshot%202024-04-15%20at%203.18.27%E2%80%AFPM.png)
 **POSSIBLE METHOD 1**
 At this point we can put this address in a <iframe> but not in an Entity because it is a webpage and not a graphic. But if someone could figure out how to do a screen shot of a page in an <iframe> using an automation and store it so we can stick it in an entity this would seem to be pretty easy for the more advanced developers in Home Assistant
 
 **This what it looks like**
+
+![Screenshot 2024-04-15 at 3 21 31 PM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/70236462-c5d3-4f3c-bba8-b6efc66d1d62)
+
 
 ```
 type: iframe
@@ -59,6 +69,7 @@ AppleTv gives up the 'media_content_id: 0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3'
 **Take** **Media_Content_Id and open the Web Page**
 [https://www.disneyplus.com/en-gb/browse/entity-0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3](https://www.disneyplus.com/en-gb/browse/entity-0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3)
 
+
 **Next Right Click on Background and copy image address and paste into a new webpage**
 [https://disney.images.edge.bamgrid.com/ripcut-delivery/v1/variant/disney/39a47257-4260-4984-bd87-53de2ce6e9a8/compose?format=webp&width=1440](https://disney.images.edge.bamgrid.com/ripcut-delivery/v1/variant/disney/39a47257-4260-4984-bd87-53de2ce6e9a8/compose?format=webp&amp;width=1440)
 Note: I did a research on [bamgrid.com](http://bamgrid.com) and this is a company that ALOT of online services is using for content. I think it is apart of AWS services.
@@ -68,11 +79,10 @@ Now we can dissect the to locate where is it is called from
 
 **Finding the Link in the webpage**
 Now, open a brower to [https://www.disneyplus.com/en-gb/browse/entity-0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3](https://www.disneyplus.com/en-gb/browse/entity-0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3) and now open Developer Tools
+
  
- 
- 
- 
-![](Home%20Assistant%20-%20AppleTv%20-%20Disney%20+%20Plus%20Cover%20Art/Screenshot%202024-04-15%20at%204.18.59%E2%80%AFPM.png) 
+ ![Screenshot 2024-04-15 at 4 18 59 PM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/29b355cf-b6ff-4865-8873-32ee457e46f5)
+
  
 **I found direct link to under <body> when I edited in HTML**
  
@@ -82,19 +92,30 @@ src="[https://disney.images.edge.bamgrid.com/ripcut-delivery/v1/variant/disney/3
 
 I did multiple test with the Disney site across Star Wars, Nat Geo, Pixel, and the classes always stay the same " class="xgfbc15s xgfbc164 xgfbc16f u5n61x2" and class="u5n61x4 xgfbc136 xgfbc13ds xgfbc13gw xg fbc15j xgfbc16k"
 
-![](Home%20Assistant%20-%20AppleTv%20-%20Disney%20+%20Plus%20Cover%20Art/Screenshot%202024-04-15%20at%203.46.14%E2%80%AFPM.png)
+
+![Screenshot 2024-04-15 at 3 46 14 PM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/32a233f8-2bf5-431f-a616-29b25ca56628)
+
+
 Here is where I searched it down. There seems to be a different class= for the different resolutions of the background/cover art
-![](Home%20Assistant%20-%20AppleTv%20-%20Disney%20+%20Plus%20Cover%20Art/Screenshot%202024-04-15%20at%204.32.05%E2%80%AFPM.png)
+
+![Screenshot 2024-04-15 at 4 32 05 PM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/48a6bb6d-2b2b-4e3d-990b-b2c4dc68c998)
+
 
 Here is a little more flow charting
-![](Home%20Assistant%20-%20AppleTv%20-%20Disney%20+%20Plus%20Cover%20Art/Screenshot%202024-04-15%20at%205.36.50%E2%80%AFAM.png) 
- 
+![Screenshot 2024-04-15 at 5 36 50 AM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/53d87990-ad7c-4875-8e67-a04c427d6d40)
+
+
+
 **So if this is possible this would be the final step.**
 If we had an automation that was triggered by AppleTv app_id: = com.disney.disneyplus and media_content_id: 0f5c5223-f4f6-46ef-ba8a-69cb0e17d8d3 changes then..... Scrape the [https://disney.images.edge.bamgrid.com/ripcut-delivery/v1/variant/disney/c41a94cf-226f-42e8-a6dc-9153cf9952c1/compose?format=webp&amp;label=standard_art_178&amp;width=800](https://disney.images.edge.bamgrid.com/ripcut-delivery/v1/variant/disney/c41a94cf-226f-42e8-a6dc-9153cf9952c1/compose?format=webp&amp;amp;label=standard_art_178&amp;amp;width=800) reference and put it into a temporary input.text variable using the locator by the class=xgfbc136 xgfbc13ds xgfbc13gw xg fbc15j xgfbc16k
 
 If we can put this link into a variable then then we can display it like ths
 
-![](Home%20Assistant%20-%20AppleTv%20-%20Disney%20+%20Plus%20Cover%20Art/Screenshot%202024-04-15%20at%204.07.54%E2%80%AFPM.png)**Note:** this is a custom:button-card I am building instead of a media.card because I have more control but this will work in a media card
+![Screenshot 2024-04-15 at 4 07 54 PM](https://github.com/crazy-craig/Home-Assistant---AppleTv---Disney-Plus-Cover-Art/assets/153091268/14ac49f9-e67e-4ed2-b324-e556857ed16b)
+
+
+
+**Note:** this is a custom:button-card I am building instead of a media.card because I have more control but this will work in a media card
 
 ```
 type: custom:button-card
